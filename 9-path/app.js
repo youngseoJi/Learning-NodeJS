@@ -29,5 +29,5 @@ console.log("isAbsolute?", path.isAbsolute(__dirname)); // true (절대 경로)
 console.log("isAbsolute?", path.isAbsolute("../")); // false (상대 경로)
 
 //normalize
-// 이상한 경로를 정상적인 경로로 변환
+// 이상한 경로를 알아서 정상적인 경로로 변환
 console.log(path.normalize("./folder/////sub")); //folder/sub
