@@ -1,15 +1,15 @@
 export default class AuthService {
   async login(username, password) {
     return {
-      username: 'ellie',
-      token: 'abc1234',
+      username: "estell",
+      token: "abc1234",
     };
   }
 
   async me() {
     return {
-      username: 'ellie',
-      token: 'abc1234',
+      username: "estell",
+      token: "abc1234",
     };
   }
 
@@ -19,8 +19,8 @@ export default class AuthService {
 
   async signup(username, password, name, email, url) {
     return {
-      username: 'ellie',
-      token: 'abc1234',
+      username: "estell",
+      token: "abc1234",
     };
   }
 }
