@@ -5,7 +5,8 @@ const app = express();
 app.use(express.json());
 
 // 반복되는 코드를 줄이기 위해 router를 사용한다.
-// 동일한 경로끼리 묶기
+// 동일한 경로끼리 묶은 버전
+
 app
   .route("/posts")
   .get((req, res) => {
