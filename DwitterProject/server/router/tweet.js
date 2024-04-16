@@ -1,46 +1,25 @@
 import express from "express";
-import tweetData from "../data/tweetData.js";
-import {
-  CreateTweet,
-  createTweet,
-  deleteTweet,
-  getAllTweets,
-  getTweet,
-  getUserTweet,
-  postTweetCreate,
-  putTweetUpdate,
-  updateTweet,
-} from "../controller/tweetController.js";
-// /tweet 경로, tweet 기능 api 라우터
+// import * as tweetRepository from "../data/tweet.js"; // tweet 데이터를 가져옴
 
+import * as tweetController from "../controller/tweet.js";
+
+// /tweet 경로, tweet 기능 api 라우터
 const router = express.Router();
 
-/* ## 기능 정리 api##
-
-1. 전체 트윗 갖고오기 Get /tweets
-2. 특정 유저 트윗 갖고 오기 Get /tweets?username=:username
-3. 특정 트윗 조회 Get /tweets/:id
-4. 새로운 트윗 생성 POST /tweets
-5. 트윗 삭제 DELETE /tweets/:id
-6. 트윗 수정 PUT /tweets/:id
-*/
-
 // 전체 트윗 조회
-router.get("/", getAllTweets);
-
 // 특정 유저 트윗 조회
-router.get("/", getUserTweet);
+router.get("/", tweetController.getTweets);
 
 // 특정 트윗 조회
-router.get("/:id", getTweet);
+router.get("/:id", tweetController.getTweet);
 
 // 새로운 트윗 생성
-router.post("/", createTweet);
-
-// 트윗 삭제
-router.delete("/:id", deleteTweet);
+router.post("/", tweetController.createTweet);
 
 // 트윗 수정
-router.put("/:id", updateTweet);
+router.put("/:id", tweetController.updateTweet);
+
+// 트윗 삭제
+router.delete("/:id", tweetController.deleteTweet);
 
 export default router;

@@ -1,4 +1,5 @@
-import tweetData from "../data/tweetData.js";
+import tweetDatajson from "../data/tweets" assert { type: "json" };
+// let tweetData = tweetDatajson;
 // API 기능 구현
 
 /* ## 기능 정리 api##

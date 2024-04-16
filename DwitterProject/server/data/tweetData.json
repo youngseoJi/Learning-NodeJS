@@ -10,7 +10,7 @@
   {
     "id": "2",
     "text": "두 번째 트윗",
-    "createdAt": "2022-01-02T00:00:00Z",
+    "createdAt": "2022-01-02T002:00:00Z",
     "name": "Bob",
     "username": "bob",
     "url": "https://example.com/profile/bob.png"
