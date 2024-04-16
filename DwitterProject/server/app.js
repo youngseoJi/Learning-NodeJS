@@ -9,6 +9,7 @@ import tweetRouter from "./router/tweet.js";
 
 const app = express();
 
+// 미들웨어 설정
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
