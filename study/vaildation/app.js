@@ -24,21 +24,21 @@ app.post(
     body("name").trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상!"),
     body("age").isInt().withMessage("숫자를 입력해"),
     body("email").isEmail().withMessage("이메일 입력해요").normalizeEmail(),
-    body("job.name").notEmpty(),
+    body("job.name").notEmpty().withMessage("직업을 입력하세요"),
     // 확인한 후 유효성 검사 함수 추가
     validate,
   ],
   (req, res, next) => {
     console.log(req.body);
-    res.sendStatus(201);
+    res.status(201).json({ message: "유효성 검사 통과" });
   }
 );
 
 app.get(
   "/:email",
-  [param("email").isEmail().withMessage("이메일 입력해요"), validate],
+  [param("email").isEmail().withMessage("이메일 입력하세요"), validate],
   (req, res, next) => {
-    res.send("💌");
+    res.send("이메일,유효성 검사 통과!");
   }
 );
 
