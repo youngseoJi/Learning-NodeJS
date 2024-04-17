@@ -3,8 +3,7 @@
 
 /**
  * {
-  id: string,  // 트윗 아이디
-  text: string,  // 트윗 텍스트
+  id: string,  // 트윗 async  텍스트
   createdAt: Date, // 트윗 생성 날짜
   name: string,  // 사용자 이름
   username: string,  // 사용자 닉네임 (아이디)
@@ -36,22 +35,22 @@ let tweets = [
  */
 
 // 전체 트윗 조회
-export function getAll() {
+export async function getAll() {
   return tweets;
 }
 
 // 특정 유저 트윗 조회
-export function getAllByUserName(username) {
+export async function getAllByUserName(username) {
   return tweets.filter((tweet) => tweet.username === username);
 }
 
 // 특정 트윗 조회
-export function getById(id) {
+export async function getById(id) {
   return tweets.find((tweet) => tweet.id === id);
 }
 
 // 새로운 트윗 생성
-export function create(text, name, username) {
+export async function create(text, name, username) {
   // 데이터 모델 생성
   const newTweet = {
     id: Date.now().toString(),
@@ -61,18 +60,17 @@ export function create(text, name, username) {
     username,
   };
   tweets = [newTweet, ...tweets];
+  return newTweet;
 }
 
-// 트윗 수정
-export function update(id, text) {
+export async function update(id, text) {
   const tweet = tweets.find((tweet) => tweet.id === id);
   if (tweet) {
     tweet.text = text;
   }
-  return text;
+  return tweet;
 }
 
-// 트윗 삭제
-export function remove(id) {
+export async function remove(id) {
   tweets = tweets.filter((tweet) => tweet.id !== id);
 }
