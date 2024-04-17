@@ -39,6 +39,13 @@ export async function createTweet(req, res) {
   res.status(201).json(tweet);
 }
 
+export async function deleteTweet(req, res) {
+  const id = req.params.id;
+  await tweetRepository.remove(id);
+
+  res.status(204).send("해당 트윗이 삭제되었습니다.");
+}
+
 export async function updateTweet(req, res) {
   const id = req.params.id;
   const { text } = req.body;
@@ -49,11 +56,4 @@ export async function updateTweet(req, res) {
   } else {
     res.status(404).json({ message: `Tweet id(${id}) not found` });
   }
-}
-
-export async function deleteTweet(req, res) {
-  const id = req.params.id;
-  await tweetRepository.remove(id);
-
-  res.status(204).send("해당 트윗이 삭제되었습니다.");
 }
