@@ -20,18 +20,18 @@ export default class TweetService {
   }
 
   // // 3. 특정 트윗 조회 Get /tweets/:id
-  // async getTweet(tweetId) {
-  //   const response = await fetch(`${this.baseURL}/tweets/${tweetId}`, {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   });
+  async getTweet(tweetId) {
+    const response = await fetch(`${this.baseURL}/tweets/${tweetId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  //   const data = await response.json();
-  //   if (response.status !== 200) {
-  //     throw new Error(data.message);
-  //   }
-  //   return data;
-  // }
+    const data = await response.json();
+    if (response.status !== 200) {
+      throw new Error(data.message);
+    }
+    return data;
+  }
 
   // 4. 새로운 트윗 생성 POST /tweets
   async postTweet(text) {
