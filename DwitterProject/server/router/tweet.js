@@ -41,6 +41,10 @@ router.post(
       .trim()
       .isLength({ min: 2 })
       .withMessage("유저 이름을 두 글자 이상 입력해주세요."),
+    body("email")
+      .trim()
+      .isEmail()
+      .withMessage("유효한 이메일 주소를 입력해주세요."),
     validate,
   ],
   tweetController.createTweet
