@@ -6,6 +6,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 
 import tweetRouter from "./router/tweet.js";
+import authRouter from "./router/auth.js";
 
 const app = express();
 
@@ -15,8 +16,9 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan("tiny"));
 
-// /tweets 경로로 들어오는 요청은 tweetRouter로 라우팅하도록 설정
+// 경로에 따른 라우터 설정
 app.use("/tweets", tweetRouter);
+app.use("/auth", authRouter);
 
 // 공통 에러 처리 미들웨어
 
