@@ -1,3 +1,10 @@
+/**  유효성 검사를 서버에서 빠르게 해야하는이유
+ *
+ * 데이터 베이스에 접근해서 읽고 쓰고 하는 것은 시간이 오래 걸리고 비용이 많이 든다.
+ * 그래서 서버에서 빠르게 유효성 검사를 해서 잘못된 데이터를 빨리 거르는 것이 좋다.
+ * validation, sanitization을 통해 데이터를 정제하고 일관성있게 유지할 수 있다.
+ */
+
 // import 하는 순서는 보통 외부 라이브러리 -> 내부 파일 순서로 한다.
 import express from "express";
 import { body, param } from "express-validator";
