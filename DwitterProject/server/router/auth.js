@@ -10,6 +10,7 @@ import express from "express";
 import { body, param } from "express-validator";
 import * as authController from "../controller/auth.js";
 import { validate } from "../middleware/vaildator.js";
+import { isAuth } from "../middleware/auth.js";
 
 // /auth 경로, 인증 기능 api 라우터
 const router = express.Router();
@@ -45,12 +46,13 @@ const validateSignUp = [
 ];
 
 // 회원가입 /auth
-router.post("/signup", validateSignUp, authController.signUp);
+router.post("/signup", validateSignUp, authController.signup);
 
 // 로그인 /auth
 router.post("/login", validateLogin, authController.login);
 
-// // 로그인한 내 정보 /auth/me
-// router.get("/me", authController.me);
+// 인증 /auth/me
+// 로그인 후 사용자가 유효한지 isAuth 미들웨어를 통해 확인
+router.get("/me", isAuth, authController.me);
 
 export default router;

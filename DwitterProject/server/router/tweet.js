@@ -10,6 +10,7 @@ import express from "express";
 import { body, param } from "express-validator";
 import * as tweetController from "../controller/tweet.js";
 import { validate } from "../middleware/vaildator.js";
+import { isAuth } from "../middleware/auth.js";
 
 // /tweet 경로, tweet 기능 api 라우터
 const router = express.Router();
@@ -26,18 +27,18 @@ const validateTweet = [
 
 // 전체 트윗 조회 Get /tweets
 // 특정 유저 트윗 조회 Get /tweets?username=:username
-router.get("/", tweetController.getTweets);
+router.get("/", isAuth, tweetController.getTweets);
 
 // 특정 트윗 조회 /tweets/:id -> 프론트 단에서 사용 X
-router.get("/:id", tweetController.getTweet);
+router.get("/:id", isAuth, tweetController.getTweet);
 
 // 새로운 트윗 생성 /tweets
-router.post("/", validateTweet, tweetController.createTweet);
+router.post("/", isAuth, validateTweet, tweetController.createTweet);
 
 // 트윗 삭제 /tweets/:id
-router.delete("/:id", tweetController.deleteTweet);
+router.delete("/:id", isAuth, tweetController.deleteTweet);
 
 // 트윗 수정 /tweets/:id
-router.put("/:id", validateTweet, tweetController.updateTweet);
+router.put("/:id", isAuth, validateTweet, tweetController.updateTweet);
 
 export default router;

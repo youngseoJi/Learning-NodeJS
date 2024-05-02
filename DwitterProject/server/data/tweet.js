@@ -1,3 +1,4 @@
+import * as userRepository from "./auth.js";
 // MVC 중 "Model" 부분 "데이터 베이스" 역할
 // 순수하게 데이터를 저장하고, 조회하는 역할을 하는 저장소
 
@@ -13,19 +14,16 @@
 let tweets = [
   {
     id: "1",
-    text: "첫 번째 트윗",
-    createdAt: "2022-01-01T00:00:00Z",
-    name: "Alice",
-    username: "alice",
-    url: "https://example.com/profile/alice.png",
+    text: "첫 번째 트윗 1 / TEST",
+    createdAt: new Date().toString(),
+    // 유저 id를 갖고 유저 데이터베이스와 연동 -> 사용자의 정보를 조회 및 변경할수 있다.
+    userId: "1",
   },
   {
     id: "2",
-    text: "두 번째 트윗",
-    createdAt: "2022-01-02T002:00:00Z",
-    name: "Bob",
-    username: "bob",
-    url: "https://example.com/profile/bob.png",
+    text: "두 번째 트윗 2 / TEST",
+    createdAt: new Date().toString(),
+    userId: "2",
   },
 ];
 
@@ -35,40 +33,85 @@ let tweets = [
  */
 
 // 전체 트윗 조회
-export async function getAll() {
-  return tweets;
-}
+// export async function getAll() {
+//   return Promise.all(
+//     tweets.map(async (tweet) => {
+//       console.log("getAll tweets", tweets);
+//       const { username, name, url } = await userRepository.findById(
+//         tweet.userId
+//       );
+//       console.log("getAll username", username);
+//       console.log("getAll tweet.userId", tweet.userId);
+//       return { ...tweet, username, name, url };
+//     })
+//   );
+// }
 
+export async function getAll() {
+  return Promise.all(
+    tweets.map(async (tweet) => {
+      const user = await userRepository.findById(tweet.userId);
+      if (!user) {
+        console.log(`User not found for ID: ${tweet.userId}`);
+        return { ...tweet, username: "Unknown", name: "Unknown", url: "" };
+      }
+      const { username, name, url } = user;
+      return { ...tweet, username, name, url };
+    })
+  );
+}
 // 특정 유저 트윗 조회
 export async function getAllByUserName(username) {
-  return tweets.filter((tweet) => tweet.username === username);
+  // 모든 트윗을 조회한 후, username에 해당하는 트윗만 필터링
+  return getAll().then((tweets) =>
+    tweets.filter((tweet) => tweet.username === username)
+  );
 }
 
 // 특정 트윗 조회
+
+// export async function getById(id) {
+//   const found = tweets.find((tweet) => tweet.id === id);
+//   if (!found) {
+//     return null;
+//   }
+//   const { username, name, url } = await userRepository.findById(found.userId);
+//   return { ...found, username, name, url };
+// }
+
 export async function getById(id) {
-  return tweets.find((tweet) => tweet.id === id);
+  const found = tweets.find((tweet) => tweet.id === id);
+  if (!found) {
+    return null;
+  }
+  const user = await userRepository.findById(found.userId);
+  if (!user) {
+    console.log(`User not found for ID: ${found.userId}`);
+    return { ...found, username: "Unknown", name: "Unknown", url: "" }; // Default values if user not found
+  }
+  const { username, name, url } = user;
+  return { ...found, username, name, url };
 }
 
 // 새로운 트윗 생성
-export async function create(text, name, username) {
+export async function create(text, userId) {
   // 데이터 모델 생성
   const newTweet = {
     id: Date.now().toString(),
     text,
     createdAt: new Date(),
-    name,
-    username,
+    userId,
   };
   tweets = [newTweet, ...tweets];
-  return newTweet;
-}
 
+  return getById(newTweet.id);
+}
 export async function update(id, text) {
   const tweet = tweets.find((tweet) => tweet.id === id);
   if (tweet) {
     tweet.text = text;
   }
-  return tweet;
+  return getById(tweet.id);
 }
 
 export async function remove(id) {

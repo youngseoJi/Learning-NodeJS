@@ -5,7 +5,7 @@ let users = [
   {
     id: "1",
     username: "brew",
-    password: "1222221!!",
+    password: "$2b$12$G9xf8SFq3oTEgdj7ozHQ/uhDOyeQcUEDU8tnOcvpvApuadr3nE5Vm",
     name: "brew",
     email: "brew@gmail.com",
     url: "https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-2-300x300.png",
@@ -21,7 +21,7 @@ let users = [
 export async function findByUser(username) {
   return users.find((user) => user.username === username);
 }
-console.log("findByUser users", users);
+// console.log("findByUser users", users);
 
 // 유저 생성
 export async function createUser(userData) {
@@ -32,4 +32,20 @@ export async function createUser(userData) {
 
   // 생성된 유저의 id를 반환
   return createdUser.id;
+}
+
+// 특정 유저 조회
+// export async function findById(id) {
+//   console.log("findById id", id);
+//   return users.find((user) => user.id === id);
+// }
+
+export async function findById(id) {
+  console.log("Searching for user ID:", id);
+  const user = users.find((user) => user.id === id);
+  if (!user) {
+    console.log("User not found:", id);
+    return null;
+  }
+  return user;
 }
