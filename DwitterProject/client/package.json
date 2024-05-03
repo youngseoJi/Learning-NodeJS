@@ -1,14 +1,15 @@
 {
   "name": "dwitter-app",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "postcss": "^8.4.38",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
     "socket.io-client": "^4.0.1",
