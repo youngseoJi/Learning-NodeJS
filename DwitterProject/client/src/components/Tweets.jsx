@@ -14,7 +14,10 @@ const Tweets = memo(({ tweetService, username, addable }) => {
   useEffect(() => {
     tweetService
       .getTweets(username)
-      .then((tweets) => setTweets([...tweets]))
+      .then((tweets) => {
+        const validTweets = tweets.filter((tweet) => tweet && tweet.username);
+        setTweets([...validTweets]);
+      })
       .catch(onError);
   }, [tweetService, username, user]);
 

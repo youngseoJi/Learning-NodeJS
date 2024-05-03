@@ -7,7 +7,7 @@
 
 // import 하는 순서는 보통 외부 라이브러리 -> 내부 파일 순서로 한다.
 import express from "express";
-import { body, param } from "express-validator";
+import { body } from "express-validator";
 import * as tweetController from "../controller/tweet.js";
 import { validate } from "../middleware/vaildator.js";
 import { isAuth } from "../middleware/auth.js";
@@ -35,10 +35,10 @@ router.get("/:id", isAuth, tweetController.getTweet);
 // 새로운 트윗 생성 /tweets
 router.post("/", isAuth, validateTweet, tweetController.createTweet);
 
-// 트윗 삭제 /tweets/:id
-router.delete("/:id", isAuth, tweetController.deleteTweet);
-
 // 트윗 수정 /tweets/:id
 router.put("/:id", isAuth, validateTweet, tweetController.updateTweet);
+
+// 트윗 삭제 /tweets/:id
+router.delete("/:id", isAuth, tweetController.deleteTweet);
 
 export default router;

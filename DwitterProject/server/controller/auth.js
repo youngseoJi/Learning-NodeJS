@@ -23,7 +23,7 @@ export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
   // console.log("Received body:", req.body);
 
-  const findUser = await userRepository.findByUser(username);
+  const findUser = await userRepository.findByUsername(username);
 
   if (findUser) {
     return res.status(409).json({ message: "이미 존재하는 아이디입니다." });
@@ -50,7 +50,7 @@ export async function login(req, res) {
   const { username, password } = req.body;
 
   // 유저 존재여부 / 아이디와 비밀번호가 일치하는지 확인
-  const user = await userRepository.findByUser(username);
+  const user = await userRepository.findByUsername(username);
   if (!user) {
     return res.status(401).json({
       message: "존재하지 않는 아이디 또는 비밀번호입니다. 다시 확인해주세요",

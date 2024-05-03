@@ -47,65 +47,131 @@ let tweets = [
 //   );
 // }
 
-export async function getAll() {
-  return Promise.all(
-    tweets.map(async (tweet) => {
-      const user = await userRepository.findById(tweet.userId);
-      if (!user) {
-        console.log(`User not found for ID: ${tweet.userId}`);
-        return { ...tweet, username: "Unknown", name: "Unknown", url: "" };
-      }
-      const { username, name, url } = user;
-      return { ...tweet, username, name, url };
-    })
-  );
-}
-// 특정 유저 트윗 조회
-export async function getAllByUserName(username) {
-  // 모든 트윗을 조회한 후, username에 해당하는 트윗만 필터링
-  return getAll().then((tweets) =>
-    tweets.filter((tweet) => tweet.username === username)
-  );
-}
+// export async function getAll() {
+//   return Promise.all(
+//     tweets.map(async (tweet) => {
+//       const user = await userRepository.findById(tweet.userId);
+//       if (!user) {
+//         console.log(`User not found for ID: ${tweet.userId}`);
+//         return { ...tweet, username: "Unknown", name: "Unknown", url: "" };
+//       }
+//       const { username, name, url } = user;
+//       return { ...tweet, username, name, url };
+//     })
+//   );
+// }
+// // 특정 유저 트윗 조회
+// export async function getAllByUserName(username) {
+//   // 모든 트윗을 조회한 후, username에 해당하는 트윗만 필터링
+//   return getAll().then((tweets) =>
+//     tweets.filter((tweet) => tweet.username === username)
+//   );
+// }
 
-// 특정 트윗 조회
+// // 특정 트윗 조회
+
+// // export async function getById(id) {
+// //   const found = tweets.find((tweet) => tweet.id === id);
+// //   if (!found) {
+// //     return null;
+// //   }
+// //   const { username, name, url } = await userRepository.findById(found.userId);
+// //   return { ...found, username, name, url };
+// // }
 
 // export async function getById(id) {
 //   const found = tweets.find((tweet) => tweet.id === id);
 //   if (!found) {
 //     return null;
 //   }
-//   const { username, name, url } = await userRepository.findById(found.userId);
+//   const user = await userRepository.findById(found.userId);
+//   if (!user) {
+//     console.log(`User not found for ID: ${found.userId}`);
+//     return { ...found, username: "Unknown", name: "Unknown", url: "" }; // Default values if user not found
+//   }
+//   const { username, name, url } = user;
 //   return { ...found, username, name, url };
 // }
+
+// // 새로운 트윗 생성
+// export async function create(text, userId) {
+//   // 데이터 모델 생성
+//   const newTweet = {
+//     id: Date.now().toString(),
+//     text,
+//     createdAt: new Date(),
+//     userId,
+//   };
+//   tweets = [newTweet, ...tweets];
+
+//   return getById(newTweet.id);
+// }
+// export async function update(id, text) {
+//   const tweet = tweets.find((tweet) => tweet.id === id);
+//   if (!tweet) {
+//     console.log(`No tweet found with ID: ${id}`);
+//     return null;
+//   }
+//   tweet.text = text;
+//   return getById(tweet.id);
+// }
+
+// export async function remove(id) {
+//   tweets = tweets.filter((tweet) => tweet.id !== id);
+// }
+
+// export async function getAll() {
+//   return Promise.all(
+//     tweets.map(async (tweet) => {
+//       console.log("getAll tweets", tweets);
+//       const { username, name, url } = await userRepository.findById(
+//         tweet.userId
+//       );
+//       return { ...tweet, username, name, url };
+//     })
+//   );
+// }
+
+export async function getAll() {
+  return Promise.all(
+    tweets.map(async (tweet) => {
+      const user = await userRepository.findById(tweet.userId);
+      if (!user) {
+        console.log(`User not found for ID: ${tweet.userId}`);
+        return null;
+      }
+      const { username, name, url } = user;
+      return { ...tweet, username, name, url };
+    })
+  );
+}
+export async function getAllByUserName(username) {
+  return getAll().then((tweets) =>
+    tweets.filter((tweet) => tweet && tweet.username === username)
+  );
+}
 
 export async function getById(id) {
   const found = tweets.find((tweet) => tweet.id === id);
   if (!found) {
     return null;
   }
-  const user = await userRepository.findById(found.userId);
-  if (!user) {
-    console.log(`User not found for ID: ${found.userId}`);
-    return { ...found, username: "Unknown", name: "Unknown", url: "" }; // Default values if user not found
-  }
-  const { username, name, url } = user;
+
+  const { username, name, url } = await userRepository.findById(found.userId);
   return { ...found, username, name, url };
 }
 
-// 새로운 트윗 생성
 export async function create(text, userId) {
-  // 데이터 모델 생성
-  const newTweet = {
-    id: Date.now().toString(),
+  const tweet = {
+    id: new Date().toString(),
     text,
     createdAt: new Date(),
     userId,
   };
-  tweets = [newTweet, ...tweets];
-
-  return getById(newTweet.id);
+  tweets = [tweet, ...tweets];
+  return getById(tweet.id);
 }
+
 export async function update(id, text) {
   const tweet = tweets.find((tweet) => tweet.id === id);
   if (tweet) {

@@ -18,27 +18,40 @@ let users = [
  */
 
 // 특정 유저 조회
-export async function findByUser(username) {
-  return users.find((user) => user.username === username);
-}
+// export async function findByUser(username) {
+//   return users.find((user) => user.username === username);
+// }
 // console.log("findByUser users", users);
 
-// 유저 생성
-export async function createUser(userData) {
-  // 데이터 모델 생성
-  const createdUser = { ...userData, id: Date.now().toString() };
-  console.log("createdUser", createdUser);
-  users.push(createdUser);
+// // 유저 생성
+// export async function createUser(userData) {
+//   // 데이터 모델 생성
+//   const createdUser = { ...userData, id: Date.now().toString() };
+//   console.log("createdUser", createdUser);
+//   users.push(createdUser);
 
-  // 생성된 유저의 id를 반환
-  return createdUser.id;
-}
-
-// 특정 유저 조회
-// export async function findById(id) {
-//   console.log("findById id", id);
-//   return users.find((user) => user.id === id);
+//   // 생성된 유저의 id를 반환
+//   return createdUser.id;
 // }
+
+// // 특정 유저 조회
+// // export async function findById(id) {
+// //   console.log("findById id", id);
+// //   return users.find((user) => user.id === id);
+// // }
+
+// export async function findById(id) {
+//   console.log("Searching for user ID:", id);
+//   const user = users.find((user) => user.id === id);
+//   if (!user) {
+//     console.log("User not found:", id);
+//     return null;
+//   }
+//   return user;
+// }
+export async function findByUsername(username) {
+  return users.find((user) => user.username === username);
+}
 
 export async function findById(id) {
   console.log("Searching for user ID:", id);
@@ -48,4 +61,9 @@ export async function findById(id) {
     return null;
   }
   return user;
+}
+export async function createUser(user) {
+  const created = { ...user, id: Date.now().toString() };
+  users.push(created);
+  return created.id;
 }

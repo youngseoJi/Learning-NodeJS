@@ -7,7 +7,7 @@
 
 // import 하는 순서는 보통 외부 라이브러리 -> 내부 파일 순서로 한다.
 import express from "express";
-import { body, param } from "express-validator";
+import { body } from "express-validator";
 import * as authController from "../controller/auth.js";
 import { validate } from "../middleware/vaildator.js";
 import { isAuth } from "../middleware/auth.js";

@@ -17,17 +17,17 @@ export const isAuth = async (req, res, next) => {
   jwt.verify(
     token,
     "F2dN7x8HVzBWaQuEEDnhsvHXRWqAR63z",
-    // "6fb53dc37fbc195c7cb25506ff14861b1df7a6da9217f59212955be5d8c0e355",
     async (error, decoded) => {
       if (error) {
         return res.status(401).json(AUTH_ERROR);
       }
       // 사용자를 데이터 베이스에서 찾지 못할경우 에러처리 -> 찾을경우 req.userId에 사용자 id를 저장
+
       const user = await userRepository.findById(decoded.id);
       if (!user) {
         return res.status(401).json(AUTH_ERROR);
       }
-      req.userId = user.id;
+      req.userId = user.id; // req.customData
       next();
     }
   );
